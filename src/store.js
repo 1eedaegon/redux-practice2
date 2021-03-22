@@ -24,11 +24,17 @@ const reducer = (state = [], acitons) => {
 
 // Store
 const store = createStore(reducer);
+// Subscriber
+// store.subscribe();
 // Dispatcher
-const dispatchAddTodo = (text) => {
-  store.dispatch(addTodo(text));
-};
-const dispatchDelTodo = (id) => {
-  // impl: id => event.target.parentNode.id
-  store.dispatch(delTodo(id));
-};
+// const dispatchAddTodo = (text) => {
+//   store.dispatch(addTodo(text));
+// };
+// const dispatchDelTodo = (id) => {
+//   // impl: id => event.target.parentNode.id
+//   store.dispatch(delTodo(id));
+// };
+// Dispatchers => Action creator
+export const actionCreator = { addTodo, delTodo };
+
+export default store;
