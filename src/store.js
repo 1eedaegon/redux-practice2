@@ -1,39 +1,34 @@
+import { configureStore, createAction, createReducer } from "@reduxjs/toolkit";
 import { createStore } from "redux";
 // Actions
-const ADD_TODO = "ADD";
-const DEL_TODO = "DEL";
+const addTodo = createAction("ADD");
+const delTodo = createAction("DEL");
 const date = Date.now;
-const addTodo = (text) => {
-  return { type: ADD_TODO, text };
-};
-const delTodo = (id) => {
-  return { type: DEL_TODO, id };
-};
+
+console.log(addTodo(), delTodo());
+const reducer = createReducer([], {
+  [addTodo]: (state, action) => [
+    { text: action.payload, id: date() },
+    ...state,
+  ],
+  [delTodo]: (state, action) =>
+    state.filter((todo) => todo.id !== action.payload),
+});
 // Reducer
-const reducer = (state = [], acitons) => {
-  switch (acitons.type) {
-    case ADD_TODO:
-      const newTodoObj = { text: acitons.text, id: date() };
-      return [newTodoObj, ...state];
-    case DEL_TODO:
-      return state.filter((todo) => todo.id !== acitons.id);
-    default:
-      return state;
-  }
-};
+// const reducer = (state = [], acitons) => {
+//   switch (acitons.type) {
+//     case addTodo.type:
+//       const newTodoObj = { text: acitons.payload, id: date() };
+//       return [newTodoObj, ...state];
+//     case delTodo.type:
+//       return state.filter((todo) => todo.id !== acitons.payload);
+//     default:
+//       return state;
+//   }
+// };
 
 // Store
-const store = createStore(reducer);
-// Subscriber
-// store.subscribe();
-// Dispatcher
-// const dispatchAddTodo = (text) => {
-//   store.dispatch(addTodo(text));
-// };
-// const dispatchDelTodo = (id) => {
-//   // impl: id => event.target.parentNode.id
-//   store.dispatch(delTodo(id));
-// };
+const store = configureStore({ reducer });
 // Dispatchers => Action creator
 export const actionCreator = { addTodo, delTodo };
 
